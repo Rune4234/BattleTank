@@ -5,6 +5,7 @@
 #include "Public/Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Actor.h"
 #include "TankPlayerController.generated.h"	// Must be last include.
 
 /**
@@ -17,6 +18,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	
 public:
 	ATank* GetControlledTank() const;
-	
+
+	void BeginPlay() override;
 	
 };
