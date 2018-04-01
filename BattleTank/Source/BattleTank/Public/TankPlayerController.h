@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Public/Tank.h"
 #include "CoreMinimal.h"
+#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Actor.h"
 #include "TankPlayerController.generated.h"	// Must be last include.
@@ -20,5 +20,4 @@ public:
 	ATank* GetControlledTank() const;
 
 	void BeginPlay() override;
-	
 };
