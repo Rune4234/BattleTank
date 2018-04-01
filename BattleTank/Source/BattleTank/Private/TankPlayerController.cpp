@@ -2,6 +2,7 @@
 #include "TankPlayerController.h"	// Must be first include.
 #include "BattleTank.h"
 
+#define OUT
 
 void ATankPlayerController::BeginPlay()
 {
@@ -29,16 +30,32 @@ ATank* ATankPlayerController::GetControlledTank() const
 }
 
 
-
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 	else {
+		FVector HitLocation;
+		if (GetSightRayHitLocation(OUT HitLocation))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *HitLocation.ToString());
 
-		// get world location of linetrace through crosshair
-		// if it hits the landsacpe
-			// tell controlled tank to aim at this point
+			// get world location of linetrace through crosshair
+			// if it hits the landsacpe
+				// tell controlled tank to aim at this point
+		}
 	}
 }
 
 
+bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& HitLocation) const
+{
+	// find the crosshair position
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(OUT ViewportSizeX, OUT ViewportSizeY);
+
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+
+	// "de-project" screen position of crosshair to a world direction
+	// line-trace along that look direction and see what we hit (up to max range)
+	return true;
+}
