@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "GameFramework/Actor.h"
+#include "Components/SceneComponent.h"
 
 
 // Sets default values for this component's properties
@@ -35,5 +36,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 {
 	FString OurTankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s is aiming at: %s"), *(OurTankName), *(WorldSpaceAim.ToString()))
+	if (!Barrel) {
+		UE_LOG(LogTemp, Error, TEXT("%s has not set barrel reference."), *(OurTankName))
+		return;
+	} else {
+		FVector BarrelLocation = Barrel->GetComponentLocation();
+		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *(OurTankName), *(WorldSpaceAim.ToString()), *(BarrelLocation.ToString()))
+	}
+}
+
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+	Barrel = BarrelToSet;
 }

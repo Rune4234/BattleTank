@@ -13,10 +13,13 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+	UTankAimingComponent();
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void AimAt(FVector WorldSpaceAim);
 
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
 private:	
-	UTankAimingComponent();
+	UStaticMeshComponent* Barrel = nullptr;
 };
