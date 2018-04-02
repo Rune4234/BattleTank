@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankPlayerController.h"	// Must be first include.
 #include "BattleTank.h"
+#include "Engine/World.h"
+#include "Camera/PlayerCameraManager.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Actor.h"
 
 #define OUT
 
@@ -38,6 +41,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 		FVector HitLocation;
 		if (GetSightRayHitLocation(OUT HitLocation))
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *(HitLocation.ToString()))
 			// get world location of linetrace through crosshair
 			// if it hits the landsacpe
 				// tell controlled tank to aim at this point
@@ -54,14 +58,13 @@ bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& HitLocation) con
 
 	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
-	// "de-project" screen position of crosshair to a world direction
+	
 	FVector LookDirection;
 	if (!GetLookDirection(ScreenLocation, LookDirection)) {
 		UE_LOG(LogTemp, Error, TEXT("Failed to get look direction."))
 	} else {
-		UE_LOG(LogTemp, Warning, TEXT("World direction: %s"), *(LookDirection.ToString()));
+		GetLookVectorHitLocation(LookDirection, OUT HitLocation);
 	}
-	// line-trace along that look direction and see what we hit (up to max range)
 	return true;
 }
 
@@ -75,4 +78,24 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, OUT FVect
 		OUT CameraWorldLocation, 
 		OUT LookDirection
 	);
+}
+
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, OUT FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	bool bLineTraceSuccess = GetWorld()->LineTraceSingleByChannel(
+		OUT HitResult,
+		StartLocation,
+		StartLocation + (LookDirection * LineTraceRange),
+		ECollisionChannel::ECC_Visibility
+	);
+	if (!bLineTraceSuccess) { 
+		OUT HitLocation = FVector(0.0f);
+		return false;
+	} else {
+		OUT HitLocation = HitResult.Location;
+		return true;
+	}
 }
