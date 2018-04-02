@@ -26,6 +26,10 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000.0f;	// TODO find sensible default value.
+
 	// Sets default values for this pawn's properties.
 	ATank();
 };
