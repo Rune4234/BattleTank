@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -15,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; //TODO should this tick?!?!?!?
 }
 
 
@@ -38,8 +39,12 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 			false,
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		);
-		if (!bSuggestProjectileVelocitySuccess) { return; }
+		float Time = GetWorld()->GetTimeSeconds();
+		if (!bSuggestProjectileVelocitySuccess) {
+			
+			UE_LOG(LogTemp, Error, TEXT("%f no projectile velocity suggested."), Time); return; }
 		else {
+			UE_LOG(LogTemp, Warning, TEXT("%f solution gound m8."), Time);
 			FVector AimDirection = LaunchVelocity.GetSafeNormal();
 			MoveBarrelTowards(AimDirection);
 		}
