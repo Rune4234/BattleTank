@@ -18,25 +18,6 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
-
-}
-
-
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
 	if (!Barrel) {
@@ -46,24 +27,34 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 	else {
 		FVector LaunchVelocity;
 		FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-		if (UGameplayStatics::SuggestProjectileVelocity
-			(
-				this,
-				OUT LaunchVelocity,
-				StartLocation,
-				WorldSpaceAim,
-				LaunchSpeed,
-				false,
-				0,
-				0,
-				ESuggestProjVelocityTraceOption::DoNotTrace
-			)
-		)
-		{
+		bool bSuggestProjectileVelocitySuccess = UGameplayStatics::SuggestProjectileVelocity
+		(
+			this,
+			OUT LaunchVelocity,
+			StartLocation,
+			WorldSpaceAim,
+			LaunchSpeed,
+			false,
+			ESuggestProjVelocityTraceOption::DoNotTrace
+		);
+		if (!bSuggestProjectileVelocitySuccess) { return; }
+		else {
 			FVector AimDirection = LaunchVelocity.GetSafeNormal();
-			UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *(GetOwner()->GetName()), *AimDirection.ToString())
+			MoveBarrelTowards(AimDirection);
 		}
 	}
+}
+
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) 
+{
+	// work out difference between current barrel rotation and aim direction.
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotation;
+
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *(DeltaRotator.ToString()))
+	// move the barrel the right amount this frame, given max elevation speed and frame time.
 }
 
 
