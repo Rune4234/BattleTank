@@ -7,7 +7,6 @@
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/BlueprintFunctionLibrary.h"
 
 #define OUT
 
@@ -37,14 +36,12 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 			WorldSpaceAim,
 			LaunchSpeed,
 			false,
+			0.0f,
+			0.0f,
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		);
-		float Time = GetWorld()->GetTimeSeconds();
-		if (!bSuggestProjectileVelocitySuccess) {
-			
-			UE_LOG(LogTemp, Error, TEXT("%f no projectile velocity suggested."), Time); return; }
+		if (!bSuggestProjectileVelocitySuccess) { return; }
 		else {
-			UE_LOG(LogTemp, Warning, TEXT("%f solution gound m8."), Time);
 			FVector AimDirection = LaunchVelocity.GetSafeNormal();
 			MoveBarrelTowards(AimDirection);
 		}

@@ -3,14 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
-#include "Engine/World.h"
-#include "Camera/PlayerCameraManager.h"
 #include "GameFramework/PlayerController.h"
-#include "GameFramework/Actor.h"
 #include "TankPlayerController.generated.h"	// Must be last include.
 
 #define OUT
+
+class ATank;
 
 /**
  * 
