@@ -46,9 +46,12 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
+	bool bIsReloaded = ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds);
+//	UE_LOG(LogTemp, Error, TEXT("is reloaded %s"), bIsReloaded ? *FString("true"):*FString("false"))
+
 	if (!Barrel) {
 		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel for firing projectile, check Blueprint that it's referenced."), *(GetOwner()->GetName()))
-	} else {
+	} else if (bIsReloaded) {
 		// Spawn projectile at socket location on barrel.
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -56,5 +59,6 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 		);
 		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
 	}
 }

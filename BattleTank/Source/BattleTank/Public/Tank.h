@@ -39,13 +39,21 @@ protected:
 private:	
 
 	UPROPERTY(EditAnywhere, Category = Firing)
+	// Launch speed for projectile.
 	float LaunchSpeed = 4000.0f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
+	// Reference to Blueprint class of Projectile.
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	// Time in seconds to wait to be able to fire again.
+	float ReloadTimeInSeconds = 3.0f;
 
 	// Local barrel reference for spawning projectile.
 	UTankBarrel* Barrel = nullptr;
+
+	double LastFireTime = 0;
 
 	// Sets default values for this pawn's properties.
 	ATank();
