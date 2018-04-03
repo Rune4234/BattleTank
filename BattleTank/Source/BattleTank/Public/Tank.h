@@ -25,6 +25,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	// Sets reference to the tanks turret asset for our C++ class.
 	void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	// Method to fire the tank, callable via Blueprint.
+	void Fire();
 	
 	void AimAt(FVector HitLocation);
 
