@@ -4,6 +4,8 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
+#include "Engine/World.h"
 #include "GameFramework/Actor.h"
 
 
@@ -29,6 +31,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
@@ -44,4 +47,15 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Blehnt!"))
+
+		if (!Barrel) {
+			UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel for firing projectile, check Blueprint that it's referenced."), *(GetOwner()->GetName()))
+		} else {
+			// SPawn projectile at socket location on barrel.
+			GetWorld()->SpawnActor<AProjectile>(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("Projectile")),
+				FRotator(0)
+			);
+		}
 }
