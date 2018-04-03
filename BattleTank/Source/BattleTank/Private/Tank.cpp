@@ -5,6 +5,9 @@
 #include "TankAimingComponent.h"
 
 
+//auto Time = GetWorld()->GetTimeSeconds();
+//UE_LOG(LogTemp, Warning, TEXT("%f: Raw %f"), Time, RawNewElevation)
+
 // Sets default values
 ATank::ATank()
 {
