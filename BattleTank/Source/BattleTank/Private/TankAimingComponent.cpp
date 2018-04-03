@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Components/SceneComponent.h"
@@ -21,8 +22,8 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
-	if (!Barrel) {
-		UE_LOG(LogTemp, Error, TEXT("%s has no reference to barrel."), *(GetOwner()->GetName()))
+	if (!Barrel || !Turret) {
+		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel or Turret, check Blueprint to make sure they are referenced."), *(GetOwner()->GetName()))
 		return;
 	}
 	else {
@@ -56,11 +57,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 
-	Barrel->Elevate(DeltaRotator.Pitch); //TODO remove magic number.
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }

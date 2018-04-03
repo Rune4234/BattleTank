@@ -20,6 +20,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
+	// Maximum number of degrees per second the barrel is allowed to move.
 	float MaxDegreesPerSecond = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
