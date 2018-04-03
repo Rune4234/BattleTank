@@ -34,7 +34,7 @@ protected:
 private:	
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.0f;	// TODO find sensible default value.
+	float LaunchSpeed = 4000.0f;
 
 	// Sets default values for this pawn's properties.
 	ATank();
