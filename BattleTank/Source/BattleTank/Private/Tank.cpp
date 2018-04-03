@@ -46,16 +46,15 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Blehnt!"))
-
-		if (!Barrel) {
-			UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel for firing projectile, check Blueprint that it's referenced."), *(GetOwner()->GetName()))
-		} else {
-			// SPawn projectile at socket location on barrel.
-			GetWorld()->SpawnActor<AProjectile>(
-				ProjectileBlueprint,
-				Barrel->GetSocketLocation(FName("Projectile")),
-				FRotator(0)
-			);
-		}
+	if (!Barrel) {
+		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel for firing projectile, check Blueprint that it's referenced."), *(GetOwner()->GetName()))
+	} else {
+		// Spawn projectile at socket location on barrel.
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+		);
+		Projectile->LaunchProjectile(LaunchSpeed);
+	}
 }
