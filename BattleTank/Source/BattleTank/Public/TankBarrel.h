@@ -19,15 +19,15 @@ public:
 	void Elevate(float RelativeSpeed);
 
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	// Maximum number of degrees per second the barrel is allowed to move.
 	float MaxDegreesPerSecond = 5.0f;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	// Maximum elevation in degrees the barrel is allowed to move.
 	float MaxElevation = 35.0f;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	// Minimum elevation in degrees the barrel is allowed to move.
 	float MinElevation = 0.0f;
 };

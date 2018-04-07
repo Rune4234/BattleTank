@@ -23,15 +23,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	// Proportional location of crosshair reticule in the X direction (50%, 33%, etc)
 	float CrosshairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	// Proportional location of crosshair reticule in the Y direction (50%, 33%, etc)
 	float CrosshairYLocation = 0.33f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	// Maximum distance in CM to line-trace.
 	float LineTraceRange = 1000000.0f;
 

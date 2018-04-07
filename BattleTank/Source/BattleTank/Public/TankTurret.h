@@ -18,7 +18,7 @@ public:
 	void Rotate(float RelativeSpeed);
 	
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	// Maximum number of degrees per second the turret is allowed to move.
 	float MaxDegreesPerSecond = 28.0f;
 	

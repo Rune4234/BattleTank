@@ -37,23 +37,24 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	// Launch speed for projectile.
-	float LaunchSpeed = 4000.0f;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	// Reference to Blueprint class of Projectile.
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	// Reference to Blueprint class of Projectile, set in Blueprint editor.
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
-	// Time in seconds to wait to be able to fire again.
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	// Time in seconds to wait before we can fire the tanks gun again.
 	float ReloadTimeInSeconds = 3.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	// Launch speed for projectile.
+	float LaunchSpeed = 4000.0f;
 
 	// Local barrel reference for spawning projectile.
 	UTankBarrel* Barrel = nullptr;
 
+	// Stores the last time the tanks gun was fired.
 	double LastFireTime = 0;
+
 
 	// Sets default values for this pawn's properties.
 	ATank();

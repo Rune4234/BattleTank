@@ -25,7 +25,6 @@ ATank::ATank()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
@@ -50,7 +49,7 @@ void ATank::Fire()
 //	UE_LOG(LogTemp, Error, TEXT("is reloaded %s"), bIsReloaded ? *FString("true"):*FString("false"))
 
 	if (!Barrel) {
-		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel for firing projectile, check Blueprint that it's referenced."), *(GetOwner()->GetName()))
+		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel to fire projectile, check Blueprint to ensure it's referenced."), *(GetOwner()->GetName()))
 	} else if (bIsReloaded) {
 		// Spawn projectile at socket location on barrel.
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
