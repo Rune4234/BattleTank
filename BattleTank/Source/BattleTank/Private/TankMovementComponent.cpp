@@ -14,9 +14,18 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("InteLOLnd move forward throw: %f"), Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
+
+	//TODO prevent double-speed due to using fly-by-wire and direct-control.
+}
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw * -1);
+
+	//TODO prevent double-speed due to using fly-by-wire and direct-control.
 }
 
 

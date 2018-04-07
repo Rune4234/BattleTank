@@ -25,6 +25,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	// Passes the intended forward/backward movement to the tank tracks.
 	void IntendMoveForward(float Throw);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	// Passes the intended right/left movement to the tank tracks.
+	void IntendTurnRight(float Throw);
 	
 private:
 	UTankTrack* LeftTrack = nullptr;
