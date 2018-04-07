@@ -20,7 +20,6 @@ ATank::ATank()
 
 	// Refrence these pointers to components we will create now.
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called to bind functionality to input
