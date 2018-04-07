@@ -8,6 +8,7 @@
 
 class UTankBarrel;	// Forward declaration.
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankTurret;
 class AProjectile;
 
@@ -30,11 +31,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	// Method to fire the tank, callable via Blueprint.
 	void Fire();
-	
+
 	void AimAt(FVector HitLocation);
 
 protected:
+	// Stores reference to the TankAimingComponent.
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, Category = Movement)
+	// Stores reference to the TankMovementComponent.
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
 	UPROPERTY(EditDefaultsOnly, Category = Setup)

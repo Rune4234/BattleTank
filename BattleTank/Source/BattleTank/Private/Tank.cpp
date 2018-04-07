@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
@@ -17,8 +18,9 @@ ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	// No need to protect pointers as added at construction
+	// Refrence these pointers to components we will create now.
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called to bind functionality to input
@@ -46,7 +48,6 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	bool bIsReloaded = ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds);
-//	UE_LOG(LogTemp, Error, TEXT("is reloaded %s"), bIsReloaded ? *FString("true"):*FString("false"))
 
 	if (!Barrel) {
 		UE_LOG(LogTemp, Error, TEXT("%s has no reference to Barrel to fire projectile, check Blueprint to ensure it's referenced."), *(GetOwner()->GetName()))
