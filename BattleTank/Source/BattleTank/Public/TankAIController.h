@@ -21,5 +21,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	// How close the tank is allowed to get to player in cm.
+	float AcceptanceRadius = 3000.0f; // TODO check radius is in cm.
 };

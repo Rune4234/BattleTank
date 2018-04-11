@@ -30,6 +30,9 @@ public:
 	// Passes the intended right/left movement to the tank tracks.
 	void IntendTurnRight(float Throw);
 	
+	// TODO check best protection for method.
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
