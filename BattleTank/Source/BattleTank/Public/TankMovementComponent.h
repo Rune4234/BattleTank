@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (C) Copyright 2018 Blehnt Corp.
 
 #pragma once
 
@@ -29,11 +29,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	// Passes the intended right/left movement to the tank tracks.
 	void IntendTurnRight(float Throw);
-	
-	// TODO check best protection for method.
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+
+	// Called from the pathfinding logic by the AI Controllers.
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };
