@@ -22,6 +22,11 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	// Gets a pointer reference to the controlled tank.
+	ATank* GetControlledTank() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	// Proportional location of crosshair reticule in the X direction (50%, 33%, etc)
@@ -34,8 +39,6 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	// Maximum distance in CM to line-trace.
 	float LineTraceRange = 1000000.0f;
-
-	ATank* GetControlledTank() const;
 
 	// Get world location of line-trace through crosshair, returns true if hits landscape.
 	bool GetSightRayHitLocation(OUT FVector& HitLocation) const;

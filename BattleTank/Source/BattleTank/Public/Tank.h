@@ -35,12 +35,9 @@ public:
 	void AimAt(FVector HitLocation);
 
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	// Stores reference to the TankAimingComponent.
 	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	// Stores reference to the TankMovementComponent.
-	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
